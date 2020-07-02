@@ -1,7 +1,6 @@
 use ndarray::prelude::*;
 use ndarray_rand::RandomExt;
 use ndarray_rand::rand_distr::Uniform;
-use num;
 use std::cmp;
 
 fn l2_norm(x: Vec<f64>) -> f64 {
@@ -48,7 +47,8 @@ fn main() {
 
     // project data into ball
     data.genrows_mut().into_iter()
-        .for_each(|mut row| row = arr1(&project_into_B_cr(row.to_vec(), c, clamping_threshold)).view());
+        .for_each(|mut row|
+            row.assign(&arr1(&project_into_B_cr(row.to_vec(), c.clone(), clamping_threshold))));
 
     // clamp
     // data.gencolumns_mut().into_iter()
